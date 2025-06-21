@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import API from '../services/api';
-import { Box, Heading, Input, Stack, Button, Text, Divider } from '@chakra-ui/react';
+import { Box, Heading, Input, Stack, Button, Text } from '@chakra-ui/react';
 
 export default function Search() {
   const [query, setQuery] = useState('');
