@@ -7,6 +7,7 @@ import Profile from './pages/Profile';
 import Search from './pages/Search';
 import Chat from './pages/Chat';
 import PrivateRoute from './components/PrivateRoute';
+import Footer from './components/Footer';
 export default function App() {
   return (
     <>
@@ -19,6 +20,7 @@ export default function App() {
         <Route path="/search" element={<PrivateRoute><Search /></PrivateRoute>} />
         <Route path="/chat" element={<PrivateRoute><Chat /></PrivateRoute>} />
       </Routes>
+      <Footer/>
     </>
   );
 }
