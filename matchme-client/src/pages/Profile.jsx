@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import API from '../services/api';
 import {
   Box,
@@ -18,6 +19,9 @@ import {
 
 export default function Profile() {
   const { user } = useAuth();
+  const toast = useToast();
+  const navigate = useNavigate(); // ✅ Hook to navigate
+
   const [profile, setProfile] = useState({
     name: '',
     age: '',
@@ -25,7 +29,6 @@ export default function Profile() {
     location: '',
     hobbies: ''
   });
-  const toast = useToast();
 
   const fetchProfile = async () => {
     try {
@@ -50,9 +53,14 @@ export default function Profile() {
         title: 'Success',
         description: 'Profile updated successfully!',
         status: 'success',
-        duration: 3000,
+        duration: 2000,
         isClosable: true,
       });
+
+      // ✅ Redirect after short delay (to allow toast to show)
+      setTimeout(() => {
+        navigate('/search'); // 👈 Change this path to wherever you want
+      }, 2200);
     } catch (err) {
       toast({
         title: 'Update Failed',
@@ -93,7 +101,7 @@ export default function Profile() {
 
             <FormControl>
               <FormLabel>Gender</FormLabel>
-              <Input name="gender" value={profile.gender} onChange={handleChange} placeholder="e.g. Male / Female / Other" />
+              <Input name="gender" value={profile.gender} onChange={handleChange} />
             </FormControl>
 
             <FormControl>
