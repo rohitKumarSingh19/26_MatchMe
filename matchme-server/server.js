@@ -7,6 +7,9 @@ const { Server } = require('socket.io');
 dotenv.config();
 const app = express();
 const server = http.createServer(app);
+app.get("/",(req,res)=>{
+  res.send('API is working')
+});
 //const chat=require('./routes/chat.routes')
 const io = new Server(server, {
   cors: {
