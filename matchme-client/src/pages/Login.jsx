@@ -36,7 +36,7 @@ export default function Login() {
         duration: 3000,
         isClosable: true,
       });
-      navigate('/');
+      navigate('/chat');//redirect to chat after login
     } catch (err) {
       toast({
         title: 'Login failed.',

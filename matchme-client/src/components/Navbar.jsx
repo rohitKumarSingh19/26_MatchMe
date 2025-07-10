@@ -1,125 +1,188 @@
-// import { Box, Button, Flex, Link } from '@chakra-ui/react';
+// import {
+//   Box,
+//   Button,
+//   Flex,
+//   Link,
+//   IconButton,
+//   useColorMode,
+//   useColorModeValue,
+//   Spacer,
+//   HStack
+// } from '@chakra-ui/react';
 // import { Link as RouterLink } from 'react-router-dom';
 // import { useAuth } from '../contexts/AuthContext';
+// import { FaMoon, FaSun } from 'react-icons/fa';
+
 // export default function Navbar() {
 //   const { user, logout } = useAuth();
+//   const { colorMode, toggleColorMode } = useColorMode();
+
+//   const bg = useColorModeValue('gray.100', 'gray.800');
+//   const color = useColorModeValue('gray.800', 'whiteAlpha.900');
+//   const hoverBg = useColorModeValue('gray.200', 'gray.700');
+
 //   return (
-//     <Flex p={4} bg="gray.100" justify="space-between" align="center">
-//       <Link as={RouterLink} to="/">MatchMe</Link>
-//       <Flex gap={4}>
+//     <Flex
+//       p={4}
+//       bg={bg}
+//       color={color}
+//       align="center"
+//       justify="space-between"
+//       shadow="md"
+//       position="sticky"
+//       top={0}
+//       zIndex={100}
+//     >
+//       {/* Brand */}
+//       <Link
+//         as={RouterLink}
+//         to="/"
+//         fontWeight="bold"
+//         fontSize="xl"
+//         _hover={{ textDecoration: 'none', color: 'pink.400' }}
+//       >
+//         MatchMe ❤️
+//       </Link>
+
+//       <HStack spacing={4}>
+//         {/* Auth Links */}
 //         {user ? (
 //           <>
-//             <Button onClick={logout}>Logout</Button>
-//             <Link as={RouterLink} to="/profile">Profile</Link>
+//             <Link
+//               as={RouterLink}
+//               to="/profile"
+//               _hover={{ textDecoration: 'none', bg: hoverBg }}
+//               px={3}
+//               py={1}
+//               borderRadius="md"
+//             >
+//               Profile
+//             </Link>
+//             <Button colorScheme="pink" size="sm" onClick={logout}>
+//               Logout
+//             </Button>
 //           </>
 //         ) : (
 //           <>
-//             <Link as={RouterLink} to="/login">Login</Link>
-//             <Link as={RouterLink} to="/register">Register</Link>
+//             <Link
+//               as={RouterLink}
+//               to="/login"
+//               _hover={{ textDecoration: 'none', bg: hoverBg }}
+//               px={3}
+//               py={1}
+//               borderRadius="md"
+//             >
+//               Login
+//             </Link>
+//             <Link
+//               as={RouterLink}
+//               to="/register"
+//               _hover={{ textDecoration: 'none', bg: hoverBg }}
+//               px={3}
+//               py={1}
+//               borderRadius="md"
+//             >
+//               Register
+//             </Link>
 //           </>
 //         )}
-//       </Flex>
+
+//         {/* Dark Mode Toggle */}
+//         <IconButton
+//           icon={colorMode === 'light' ? <FaMoon /> : <FaSun />}
+//           onClick={toggleColorMode}
+//           aria-label="Toggle Dark Mode"
+//           variant="ghost"
+//         />
+//       </HStack>
 //     </Flex>
 //   );
 // }
 
 import {
   Box,
-  Button,
   Flex,
-  Link,
-  IconButton,
-  useColorMode,
-  useColorModeValue,
+  Button,
+  Text,
   Spacer,
-  HStack
+  Link,
+  useColorMode,
+  IconButton,
+  useColorModeValue,
 } from '@chakra-ui/react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { FaMoon, FaSun } from 'react-icons/fa';
+import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 
 export default function Navbar() {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
   const { colorMode, toggleColorMode } = useColorMode();
 
-  const bg = useColorModeValue('gray.100', 'gray.800');
-  const color = useColorModeValue('gray.800', 'whiteAlpha.900');
-  const hoverBg = useColorModeValue('gray.200', 'gray.700');
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   return (
     <Flex
-      p={4}
-      bg={bg}
-      color={color}
+      as="nav"
       align="center"
       justify="space-between"
+      wrap="wrap"
+      p={4}
+      bg={useColorModeValue('gray.800', 'gray.900')}
+      color="white"
       shadow="md"
-      position="sticky"
-      top={0}
-      zIndex={100}
     >
       {/* Brand */}
-      <Link
-        as={RouterLink}
-        to="/"
-        fontWeight="bold"
-        fontSize="xl"
-        _hover={{ textDecoration: 'none', color: 'pink.400' }}
-      >
+       <Link as={RouterLink} to="/" _hover={{ textDecoration: 'none' }}>
+      <Text fontSize="xl" fontWeight="bold" color="pink.400">
         MatchMe ❤️
+      </Text>
       </Link>
 
-      <HStack spacing={4}>
-        {/* Auth Links */}
+      <Spacer />
+
+      {/* Links */}
+      <Flex gap={4} align="center">
         {user ? (
           <>
-            <Link
-              as={RouterLink}
-              to="/profile"
-              _hover={{ textDecoration: 'none', bg: hoverBg }}
-              px={3}
-              py={1}
-              borderRadius="md"
-            >
+            <Text fontSize="md" fontWeight="semibold">
+              Hi, {user.name.split(' ')[0]}
+            </Text>
+            <Link as={RouterLink} to="/profile">
               Profile
             </Link>
-            <Button colorScheme="pink" size="sm" onClick={logout}>
+            <Link as={RouterLink} to="/search">
+              Search
+            </Link>
+            <Link as={RouterLink} to="/chat">
+              Chat
+            </Link>
+            <Button size="sm" colorScheme="pink" onClick={handleLogout}>
               Logout
             </Button>
           </>
         ) : (
           <>
-            <Link
-              as={RouterLink}
-              to="/login"
-              _hover={{ textDecoration: 'none', bg: hoverBg }}
-              px={3}
-              py={1}
-              borderRadius="md"
-            >
+            <Link as={RouterLink} to="/login">
               Login
             </Link>
-            <Link
-              as={RouterLink}
-              to="/register"
-              _hover={{ textDecoration: 'none', bg: hoverBg }}
-              px={3}
-              py={1}
-              borderRadius="md"
-            >
+            <Link as={RouterLink} to="/register">
               Register
             </Link>
           </>
         )}
-
         {/* Dark Mode Toggle */}
         <IconButton
-          icon={colorMode === 'light' ? <FaMoon /> : <FaSun />}
+          aria-label="Toggle dark mode"
+          icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
           onClick={toggleColorMode}
-          aria-label="Toggle Dark Mode"
           variant="ghost"
+          size="sm"
         />
-      </HStack>
+      </Flex>
     </Flex>
   );
 }
